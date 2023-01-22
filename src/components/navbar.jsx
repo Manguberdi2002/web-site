@@ -13,8 +13,8 @@ const Navbar = () => {
       </Link>
 
       <nav className="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-        <Link className="me-3 py-2  text-decoration-none btn btn-outline-"  to="/login">Sign in</Link>
-        <Link className="me-3 py-2  text-decoration-none btn btn-outline-primary" to="/register">Sign up</Link>
+        <Link className="me-3 py-2  text-decoration-none btn btn-outline-link z-i"  to="/login">Sign in</Link>
+        <Link className="me-3 py-2  text-decoration-none btn btn-outline-primary z-i" to="/register">Sign up</Link>
 
       </nav>
     </div>
