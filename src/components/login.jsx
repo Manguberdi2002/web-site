@@ -18,7 +18,7 @@ const Login = () => {
     try {
       const response = await AuthService.userLogin(user)
       console.log(response);
-      dispatch(SingUserSuccess())
+      dispatch(SingUserSuccess(response.user))
     } catch (error) {
       dispatch(SingUserFailure(error.response.data.errors))
     }
