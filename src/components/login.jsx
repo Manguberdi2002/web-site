@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import AuthService from "../service/auth";
-import { loginUserFailure, loginUserStart, loginUserSuccess } from "../slice/auth";
+import { SingUserFailure, SingUserStart, SingUserSuccess } from "../slice/auth";
 import { Input } from "../UI";
 
 const Login = () => {
@@ -13,14 +13,14 @@ const Login = () => {
 
   const loginHandler = async(e) => {
     e.preventDefault();
-    dispatch(loginUserStart());
+    dispatch(SingUserStart());
     const user = {email, password}
     try {
       const response = await AuthService.userLogin(user)
       console.log(response);
-      dispatch(loginUserSuccess())
+      dispatch(SingUserSuccess())
     } catch (error) {
-      dispatch(loginUserFailure())
+      dispatch(SingUserFailure(error.response.data.errors))
     }
   };
 

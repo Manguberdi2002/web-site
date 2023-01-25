@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import AuthService from "../service/auth";
-import { regUserFailure, regUserStart, regUserSuccess } from "../slice/auth";
+import { SingUserFailure, SingUserStart, SingUserSuccess } from "../slice/auth";
 import { Input } from "../UI";
 const Register = () => {
   const [name, setName] = useState("")
@@ -13,15 +13,15 @@ const Register = () => {
 
   const registerHanle = async(e) =>{
     e.preventDefault()
-    dispatch(regUserStart())
+    dispatch(SingUserStart())
     const user = {username:name, email, password}
     try {
       const response = await AuthService.userRegister(user)
       console.log(response);
       console.log(user);
-      dispatch(regUserSuccess())
+      dispatch(SingUserSuccess())
     } catch (error) {
-      dispatch(regUserFailure())
+      dispatch(SingUserFailure(error.response.data.errors))
     }
     
   }
