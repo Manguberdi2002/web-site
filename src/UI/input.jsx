@@ -1,4 +1,3 @@
-import {useState} from 'react'
 const Input = ({label, type="text", state, setState}) => {
   return (
     <div className="form-floating">
@@ -10,7 +9,7 @@ const Input = ({label, type="text", state, setState}) => {
       value={state}
       onChange={e => setState(e.target.value)}
     />
-    <label for="floatingUser">{label}</label>
+    <label htmlFor="floatingUser">{label}</label>
   </div>
     )
 }

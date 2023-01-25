@@ -1,14 +1,33 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import AuthService from "../service/auth";
+import { loginUserFailure, loginUserStart, loginUserSuccess } from "../slice/auth";
 import { Input } from "../UI";
 
 const Login = () => {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  const { isLoading } = useSelector((state) => state.auth);
+
+  const loginHandler = async(e) => {
+    e.preventDefault();
+    dispatch(loginUserStart());
+    const user = {email, password}
+    try {
+      const response = await AuthService.userLogin(user)
+      console.log(response);
+      dispatch(loginUserSuccess())
+    } catch (error) {
+      dispatch(loginUserFailure())
+    }
+  };
+
   return (
     <div className="bg">
       <Link to="/" className="back">
-        <i class="fa-solid fa-xmark"></i>
+        <i className="fa-solid fa-xmark"></i>
       </Link>
       <div className="container">
         <div className="reg_logo">
@@ -48,8 +67,14 @@ const Login = () => {
               state={password}
               setState={setPassword}
             />
-            
-            <button className="btn btn-primary w-100 p-2 mt-4">Sign in</button>
+
+            <button
+              disabled={isLoading}
+              className="btn btn-primary w-100 p-2 mt-4"
+              onClick={loginHandler}
+            >
+              {isLoading ? "loading..." : "Sign in"}
+            </button>
           </form>
         </div>
       </div>

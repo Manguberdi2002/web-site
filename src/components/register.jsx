@@ -1,14 +1,35 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import AuthService from "../service/auth";
+import { regUserFailure, regUserStart, regUserSuccess } from "../slice/auth";
 import { Input } from "../UI";
 const Register = () => {
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const dispatch = useDispatch()
+  const {isLoading} = useSelector((state) => state.auth)
+
+  const registerHanle = async(e) =>{
+    e.preventDefault()
+    dispatch(regUserStart())
+    const user = {username:name, email, password}
+    try {
+      const response = await AuthService.userRegister(user)
+      console.log(response);
+      console.log(user);
+      dispatch(regUserSuccess())
+    } catch (error) {
+      dispatch(regUserFailure())
+    }
+    
+  }
+
   return (
     <div className="bg">
       <Link to='/' className="back">
-      <i class="fa-solid fa-xmark"></i>
+      <i className="fa-solid fa-xmark"></i>
       </Link>
       <div className="container">
         <div className="reg_logo">
@@ -44,7 +65,7 @@ const Register = () => {
             <Input label={"Username"} state={name} setState={setName} />
             <Input label={"Email address"} state={email} setState={setEmail}/>
             <Input label={"Password"} type={'password'} state={password} setState={setPassword} />
-            <button className="btn btn-primary w-100 p-2 mt-4">Sign up</button>
+            <button disabled={isLoading} onClick={registerHanle} className="btn btn-primary w-100 p-2 mt-4">{isLoading ? "loading..." :"Sign up"}</button>
           </form>
         </div>
       </div>

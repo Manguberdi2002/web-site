@@ -37,8 +37,15 @@
         color:#fff;
         transition: 1s;
         &:hover{
-            color:#000
-
+            font-size: 30px;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color:#000;
+            border: 1px solid #333;
+            border-radius: 5px;
         }
     }
     .reg_logo{
