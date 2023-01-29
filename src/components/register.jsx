@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import AuthService from "../service/auth";
 import { SingUserFailure, SingUserStart, SingUserSuccess } from "../slice/auth";
 import { Input } from "../UI";
+import {ValidationError} from "./";
 const Register = () => {
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
@@ -61,6 +62,7 @@ const Register = () => {
             <b>USM</b>
           </div>
           <div className="title">Please sign up</div>
+          <ValidationError/>
           <form>
             <Input label={"Username"} state={name} setState={setName} />
             <Input label={"Email address"} state={email} setState={setEmail}/>

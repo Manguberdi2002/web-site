@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import AuthService from "../service/auth";
 import { SingUserFailure, SingUserStart, SingUserSuccess } from "../slice/auth";
 import { Input } from "../UI";
+import {ValidationError} from "./";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -59,6 +60,7 @@ const Login = () => {
             <b>USM</b>
           </div>
           <div className="title">Please sign in</div>
+          <ValidationError/>
           <form>
             <Input label={"Email address"} state={email} setState={setEmail} />
             <Input
