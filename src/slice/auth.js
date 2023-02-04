@@ -17,15 +17,19 @@ export const authSlice = createSlice({
       state.isLoggedIn = true;
       state.isLoading = false;
       state.user = action.payload;
-      setItem('token',action.payload.token)
+      setItem("token", action.payload.token);
     },
     SingUserFailure: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },
+    logoutUser: (state) => {
+      state.user = null
+      state.isLoggedIn = false
+    },
   },
 });
 
-export const { SingUserStart, SingUserFailure, SingUserSuccess } =
+export const { SingUserStart, SingUserFailure, SingUserSuccess, logoutUser } =
   authSlice.actions;
 export default authSlice.reducer;
