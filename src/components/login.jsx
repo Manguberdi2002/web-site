@@ -1,30 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AuthService from "../service/auth";
 import { SingUserFailure, SingUserStart, SingUserSuccess } from "../slice/auth";
 import { Input } from "../UI";
-import {ValidationError} from "./";
+import { ValidationError } from "./";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-  const { isLoading } = useSelector((state) => state.auth);
-
-  const loginHandler = async(e) => {
+  const { isLoading, isLoggedIn } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+  const loginHandler = async (e) => {
     e.preventDefault();
     dispatch(SingUserStart());
-    const user = {email, password}
+    const user = { email, password };
     try {
-      const response = await AuthService.userLogin(user)
-      console.log(response);
-      dispatch(SingUserSuccess(response.user))
+      const response = await AuthService.userLogin(user);
+      dispatch(SingUserSuccess(response.user));
+      navigate("/");
     } catch (error) {
-      dispatch(SingUserFailure(error.response.data.errors))
+      dispatch(SingUserFailure(error.response.data.errors));
     }
   };
-
+useEffect(() =>{
+  if(isLoggedIn){
+     navigate('/')
+    }
+},[isLoggedIn])
   return (
     <div className="bg">
       <Link to="/" className="back">
@@ -60,7 +64,7 @@ const Login = () => {
             <b>USM</b>
           </div>
           <div className="title">Please sign in</div>
-          <ValidationError/>
+          <ValidationError />
           <form>
             <Input label={"Email address"} state={email} setState={setEmail} />
             <Input

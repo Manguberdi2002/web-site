@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AuthService from "../service/auth";
 import { SingUserFailure, SingUserStart, SingUserSuccess } from "../slice/auth";
 import { Input } from "../UI";
@@ -9,8 +9,9 @@ const Register = () => {
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const navigate = useNavigate();
   const dispatch = useDispatch()
-  const {isLoading} = useSelector((state) => state.auth)
+  const {isLoading, isLoggedIn} = useSelector((state) => state.auth)
 
   const registerHanle = async(e) =>{
     e.preventDefault()
@@ -26,7 +27,11 @@ const Register = () => {
     }
     
   }
-
+  useEffect(() =>{
+    if(isLoggedIn){
+       navigate('/')
+      }
+  },[isLoggedIn])
   return (
     <div className="bg">
       <Link to='/' className="back">
