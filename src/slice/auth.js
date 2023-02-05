@@ -33,3 +33,4 @@ export const authSlice = createSlice({
 export const { SingUserStart, SingUserFailure, SingUserSuccess, logoutUser } =
   authSlice.actions;
 export default authSlice.reducer;
+
